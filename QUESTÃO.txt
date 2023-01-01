@@ -1,0 +1,69 @@
+QUESTÃO ÚNICA:
+Leleco Pião sempre gostou muito de jogos em geral, porém tem uma paixão em específico: jogos de carta.
+Com o tempo, foi desenvolvendo a ideia do seu próprio jogo de cartas, utilizando seus heróis favoritos da Marvel.
+
+Seu jogo é realizado com dois jogadores, onde ambos possuem um baralho com cartas de heróis.
+Todas as cartas possuem dois atributos, sendo eles "força" e "resistência", respectivamente representados pela bola azul e o hexágono laranja.
+Os jogadores devem jogar uma carta na mesa, para realizar a comparação de seus atributos.
+Durante a batalha, ambas as cartas escolhidas pelos jogadores causam dano às cartas escolhidas pelo respectivo adversário.
+O cálculo do dano é feito com base na força e resistência das cartas escolhidas.
+
+Ao final, o jogador que possuir o herói que causou mais dano, vence.
+No jogo, também existe um sistema de pontuação, onde uma vitória soma 3 pontos, um empate soma 1 ponto e derrota não soma nada. 
+
+--
+
+Com base no enunciado acima, crie um programa HTML/JS que simule o jogo desenvolvido por Leleco Pião, onde o usuário simulará o jogo entre o usuário e o programa (a primeira carta será a do usuário e a segunda do programa, também conhecido como "a máquina").
+
+(1 pt) O código deve ter boa qualidade, ou seja, possuir bons nomes de variáveis, funções e não conter gambiarras.
+
+VERSÃO 2 - (vale 9 pts /  max. 10 com qualidade)
+a) (1,5 pt) Ao carregar a página: 
+    a.1.) Deve criar uma pilha geral de cartas, que contém 10 cartas que possuem poder, resistência e imagem;
+    a.2.) O baralho do jogador deve ser criado, contendo 5 cartas aleatórias da pilha (não pode repetir cartas de um mesmo baralho, mas não tem problema repetir no baralho do adversário);
+    a.3.) O baralho do adversário deve ser criado, contendo 5 cartas aleatórias da pilha (não pode repetir cartas de um mesmo baralho, mas não tem problema repetir no baralho do jogador)
+    a.4) Conforme cria o baralho do jogador, verifica se a carta que está colocando no baralho é repetida, enquanto for uma carta repetida, deve sortear novamente;
+    a.5) Conforme cria o baralho do jogador, verifica se a carta que está colocando no baralho é repetida, enquanto for uma carta repetida, deve sortear novamente;
+      OBS: na 'pilha geral de cartas' devem haver as 10 cartas disponíveis. Cada baralho receberá 5 cartas aleatórias, mas uma mesma carta pode ser sorteada tanto para o jogador quanto para o adversário, sem problemas! - por exemplo, os 2 jogadores podem ter a 'Viúva Negra' e o 'Deadpool', mas os outros 3 heróis devem ser diferentes entre as outras cartas do baralho (não se pode repetir as cartas no mesmo baralho do jogador ou oponente, mas não tem problema repetir entre os jogadores!).
+b) Tenha no começo da página, o texto "Jogador: 0", que representa os pontos do jogador e "Adversário: 0", que representa os pontos da máquina, que serão atualizados conforme os resultados das batalhas;
+c) (1 pt) Abaixo dos pontos, exiba duas listas de cartas: 
+    c.1.) "Baralho Restante do Jogador": exibe as imagens das cartas geradas aleatoriamente para o baralho do jogador, uma ao lado da outra;
+    c.2.) "Baralho Restante do Adversário": exibe as imagens das cartas geradas aleatoriamente para o baralho do adversário, uma ao lado da outra;
+d.) (6 pts total) Tenha um botão "Simular Batalha", que ao ser clicado:
+    d.1.) Valida se existem cartas restantes em ambos os baralhos para serem jogadas; - veja o item d.4.)
+    d.2.) (1 pt) Começa a batalha: 
+        d.2.1.) Selecione aleatoriamente uma carta do baralho do jogador para o jogador batalhar;
+        d.2.2.) Selecione aleatoriamente uma carta do baralho do adversário para o adversário batalhar;
+    d.3.1.) (1 pt) Exibe abaixo do botão, a imagem de ambas as cartas selecionadas aleatoriamente, sendo "IMG_CARTA_JOGADOR   VS.   IMG_CARTA_ADVERSÁRIO";
+    d.4.) (1,5 pt) Após selecionar as cartas, atualiza as imagens das listas de "Baralho Restante do Jogador" e "Baralho Restante do Adversário" no topo da página, removendo as cartas que estão batalhando;
+    d.5.) (1 pt) Realiza a batalha, comparando os valores do atributos de ataque e resistência de ambas as cartas, onde: 
+        d.5.1.) O herói do jogador e do adversário se atacam, aplicando a força do jogador sobre a resistência do adversário e a força do adversário sobre a resistência do jogador;
+        d.5.2.) Caso a força do herói atacante seja maior que a resistência do defensor, causam dano ao adversário igual a diferença;
+        d.5.3.) Caso a carta do jogador tenha causado mais dano que a do adversário, o jogador ganha, mas caso contrário perde;
+        d.5.4.) Caso a carta do jogador tenha causado o mesmo dano que a carta adversária, ambos empatam;
+    d.6.) (1 pt) De acordo com o ganhador da batalha entre os dois heróis, calcule os pontos resultantes, onde: 
+        d.6.1.) Caso o jogador seja o ganhador, some 3 aos pontos do jogador e abaixo das imagens da batalha, exiba "O jogador venceu!" na cor verde.
+        d.6.2.) Caso o adversário seja o ganhador, some 3 dos pontos do adversário e abaixo das imagens da batalha, exiba "A máquina venceu!" na cor vermelha.
+        d.6.3.) Caso ambos tenham empatado, some 1 aos pontos totais e abaixo das imagens da batalha, exiba "Houve um empate!" na cor azul.
+    d.7.) (1 pt) Caso essa seja a última batalha e o baralho dos jogadores não tenha mais cartas, exiba um vencedor: 
+        d.7.1.) Apague todas as mensagens na tela, menos o placar, que contém as pontuações do jogador/adversário e o resultado da batalha final ("IMG_CARTA_JOGADOR   VS.   IMG_CARTA_ADVERSÁRIO" e mensagem de quem venceu aquela batalha);
+        d.7.2.) Caso o jogador possua mais pontos que o adversário, exiba "O jogador é o grande vencedor da partida com X pontos!" na cor verde, sendo X os pontos do jogador;
+        d.7.3.) Caso o adversário possua mais pontos que o jogador, exiba "O adversário venceu a partida com X pontos! Vai lá treinar mais um pouquinho, jogador!" na cor vermelha, sendo X os pontos do jogador;
+        d.7.4) Caso ambos jogadores possuam a mesma quantidade de pontos, exiba "Oloco meo! Ambos são igualmente bons!" na cor azul;
+
+
+
+
+---
+
+OBSERVAÇÕES GERAIS: 
+OBS1: para executar algo quando a página carrega, é só colocar diretamente na tag <script></script> (como exibir um alerta ao carregar a página, ou para iniciar uma variável global);
+OBS2: o círculo azul representa a FORÇA e o hexágono laranja representa a RESISTÊNCIA da carta;
+OBS3: na batalha, a carta do jogador sempre será a carta à esquerda e do adversário à direita;
+OBS4: para calcular o dano causado, deve subtrair a força do atacante pela resistência do defensor, exemplo -> caso o meu herói tenha 3 de força / 2 de resistência e o herói do oponente tenha 2 de força / 1 de resistência, eu levo 0 de dano (2 força - 2 resistência) e ele leva 2 de dano (3 força - 1 resistência). 
+
+
+
+OBSERVAÇÕES VERSÃO 2:
+OBS1: nesta versão, no item a) deve criar dois baralhos, um para o jogador e outro para o adversário;
+OBS2: no item c.7.) deve validar o ganhador por pontos somente caso as cartas dos baralhos tenham acabado, ou seja, se já realizaram a última batalha;

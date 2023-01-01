@@ -8,25 +8,24 @@
     <title>AC3-TREINO</title>
 </head>
 
-<body>
-    <b>Pontos jogador:</b><span id="jogador_pontos">0</span>
+<body class="background">
+    <b>Pontos jogador:</b><span id="s1">0</span>
     <br>
-    <b>Pontos adversário:</b><span id="adversario_pontos">0</span>
+    <b>Pontos adversário:</b><span id="s2">0</span>
     <br>
+    <div id="div_background">
+        <h2>BARALHO RESTANTE DO JOGADOR</h2>
+        <div id="div_baralho_jogador"></div>
+        <br><br>
+        <h2>BARALHO RESTANTE ADVERSÁRIO</h2>
+        <div id="div_baralho_adversario"></div>
 
-    <h2>BARALHO RESTANTE DO JOGADOR</h2>
-    <div id="div_baralho_jogador"></div>
-    <br><br>
-    <h2>BARALHO RESTANTE ADVERSÁRIO</h2>
-    <div id="div_baralho_adversario"></div>
-
-    <button onclick="simular()">Simular batalha</button>
-    <div id="div_batalha"></div>
-
+        <button onclick="simular()">Simular batalha</button>
+        <div id="div_batalha"></div>
+    </div>
 </body>
 
 </html>
-
 <script>
     const cartas = [
         {
@@ -96,6 +95,7 @@
     let baralho_batalha_adversario = []
     let pontos_jogador = 0
     let pontos_adversario = 0
+    let round = 0
 
     window.onload = sortear()
 
@@ -104,10 +104,10 @@
             let sorteada = parseInt(Math.random() * 10)
             let sorteadaAdversario = parseInt(Math.random() * 10)
 
-            if (baralho_jogador.indexOf(cartas[sorteada])>-1) {
+            if (baralho_jogador.indexOf(cartas[sorteada]) > -1) {
                 while (true) {
                     sorteada = parseInt(Math.random() * 10)
-                    if (baralho_jogador.indexOf(cartas[sorteada])<0) {
+                    if (baralho_jogador.indexOf(cartas[sorteada]) < 0) {
                         baralho_jogador.push(cartas[sorteada])
                         break
                     }
@@ -116,10 +116,10 @@
                 baralho_jogador.push(cartas[sorteada])
             }
 
-            if (baralho_adversario.indexOf(cartas[sorteadaAdversario])>-1) {
+            if (baralho_adversario.indexOf(cartas[sorteadaAdversario]) > -1) {
                 while (true) {
                     sorteadaAdversario = parseInt(Math.random() * 10)
-                    if (baralho_adversario.indexOf(cartas[sorteadaAdversario])<0) {
+                    if (baralho_adversario.indexOf(cartas[sorteadaAdversario]) < 0) {
                         baralho_adversario.push(cartas[sorteadaAdversario])
                         break
                     }
@@ -132,11 +132,10 @@
         for (let index = 0; index < 5; index++) {
             const cartaAtualJogador = baralho_jogador[index];
             const cartaAtualAdversario = baralho_adversario[index];
-            div_baralho_jogador.innerHTML += `<img src="${cartaAtualJogador.img}" alt="" width="100px">`
-            div_baralho_adversario.innerHTML += `<img src="${cartaAtualAdversario.img}" alt="" width="100px">`
+            div_baralho_jogador.innerHTML += `<img src="${cartaAtualJogador.img}" alt="" width="120px">`
+            div_baralho_adversario.innerHTML += `<img src="${cartaAtualAdversario.img}" alt="" width="120px">`
         }
     }
-
 
     function simular() {
         div_baralho_jogador.innerHTML = ``
@@ -144,38 +143,64 @@
         let cartaJogador = parseInt(Math.random() * baralho_jogador.length)
         let cartaAdversario = parseInt(Math.random() * baralho_adversario.length)
 
-        if (baralho_batalha_adversario.length==5 && baralho_batalha_jogador==5) {
-            alert(`O jogo já acabou!`)
+        if (baralho_batalha_jogador.indexOf(baralho_jogador[cartaJogador]) > -1) {
+            while (baralho_batalha_jogador.indexOf(baralho_jogador[cartaJogador]) > -1) {
+                cartaJogador = parseInt(Math.random() * baralho_jogador.length)
+            }
+            baralho_batalha_jogador.push(baralho_jogador[cartaJogador])
         } else {
-            if (baralho_batalha_jogador.indexOf(baralho_jogador[cartaJogador])>-1) {
-                while (baralho_batalha_jogador.indexOf(cartaJogador)>-1) {
-                    cartaJogador = parseInt(Math.random() * baralho_jogador.length)
-                }
-                baralho_batalha_jogador.push(baralho_jogador[cartaJogador])
-            } else {
-                baralho_batalha_jogador.push(baralho_jogador[cartaJogador])
+            baralho_batalha_jogador.push(baralho_jogador[cartaJogador])
+        }
+
+        if (baralho_batalha_adversario.indexOf(baralho_adversario[cartaAdversario]) > -1) {
+            while (baralho_batalha_adversario.indexOf(baralho_adversario[cartaAdversario]) > -1) {
+                cartaAdversario = parseInt(Math.random() * baralho_adversario.length)
+            }
+            baralho_batalha_adversario.push(baralho_adversario[cartaAdversario])
+        } else {
+            baralho_batalha_adversario.push(baralho_adversario[cartaAdversario])
+        }
+
+        for (let index = 0; index < 5; index++) {
+            const cartaAtualJogador = baralho_jogador[index]
+            const cartaAtualAdversario = baralho_adversario[index]
+            if (baralho_batalha_jogador.indexOf(cartaAtualJogador) < 0) {
+                div_baralho_jogador.innerHTML += `<img src="${cartaAtualJogador.img}" alt="" width="120px">`
             }
 
-            if (baralho_batalha_adversario.indexOf(baralho_adversario[cartaAdversario])>-1) {
-                while (baralho_batalha_adversario.indexOf(cartaAdversario)>-1) {
-                    cartaAdversario = parseInt(Math.random() * baralho_adversario.length)
-                }
-                baralho_batalha_adversario.push(baralho_adversario[cartaAdversario])
-            } else {
-                baralho_batalha_adversario.push(baralho_adversario[cartaAdversario])
+            if (baralho_batalha_adversario.indexOf(cartaAtualAdversario) < 0) {
+                div_baralho_adversario.innerHTML += `<img src="${cartaAtualAdversario.img}" alt="" width="120px">`
             }
+        }
+        div_batalha.innerHTML = `<img src="${baralho_jogador[cartaJogador].img}" alt="" width="200px"> X <img src="${baralho_adversario[cartaAdversario].img}" alt="" width="200px">`
 
-            for (let index = 0; index < 5; index++) {
-                const cartaAtualJogador = baralho_jogador[index]
-                const cartaAtualAdversario = baralho_adversario[index]
-                if(baralho_batalha_jogador.indexOf(cartaAtualJogador)<0) {
-                    div_baralho_jogador.innerHTML += `<img src="${cartaAtualJogador.img}" alt="" width="100px">`
-                }
+        let poder_jogador = baralho_jogador[cartaJogador].forca - baralho_adversario[cartaAdversario].resistencia
+        let poder_adversario = baralho_adversario[cartaAdversario].forca - baralho_jogador[cartaJogador].resistencia
+        if (poder_jogador > poder_adversario) {
+            div_batalha.innerHTML += `<br><span style="color:green">O jogador venceu esse round</span>`
+            pontos_jogador += 3
+        } else if (poder_jogador < poder_adversario) {
+            div_batalha.innerHTML += `<br><span style="color:red">O adversario venceu esse round</span>`
+            pontos_adversario += 3
+        } else {
+            div_batalha.innerHTML += `<br><span style="color:blue">Esse round empatou</span>`
+            pontos_adversario++
+            pontos_jogador++
+        }
+        s1.innerHTML = pontos_jogador
+        s2.innerHTML = pontos_adversario
+        round++
 
-                if(baralho_batalha_adversario.indexOf(cartaAtualAdversario)<0) {
-                    div_baralho_adversario.innerHTML += `<img src="${cartaAtualAdversario.img}" alt="" width="100px">`
-                }
-                
+        if (round == 5) {
+            if (pontos_jogador > pontos_adversario) {
+                div_background.innerHTML = `<h1><span style="color:green">O jogador é o grande vencedor da partida com ${pontos_jogador} pontos!</span></h1>`
+                div_background.innerHTML += `Para jogar novamente basta reiniciar a página!`
+            } else if (pontos_jogador < pontos_adversario) {
+                div_background.innerHTML = `<h1><span style="color:red">O adversário venceu a partida com ${pontos_adversario} pontos!</span></h1>`
+                div_background.innerHTML += `Para jogar novamente basta reiniciar a página!`
+            } else {
+                div_background.innerHTML = `<h1><span style="color:blue">Oloco meo! Ambos são igualmente bons!</h1>`
+                div_background.innerHTML += `Para jogar novamente basta reiniciar a página!`
             }
         }
     }
