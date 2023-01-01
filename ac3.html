@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC3-TREINO</title>
+</head>
+
+<body>
+    <b>Pontos jogador:</b><span id="jogador_pontos">0</span>
+    <br>
+    <b>Pontos adversário:</b><span id="adversario_pontos">0</span>
+    <br>
+
+    <h2>BARALHO RESTANTE DO JOGADOR</h2>
+    <div id="div_baralho_jogador"></div>
+    <br><br>
+    <h2>BARALHO RESTANTE ADVERSÁRIO</h2>
+    <div id="div_baralho_adversario"></div>
+
+    <button onclick="simular()">Simular batalha</button>
+    <div id="div_batalha"></div>
+
+</body>
+
+</html>
+
+<script>
+    const cartas = [
+        {
+            nome: "capitao_america",
+            forca: 3,
+            resistencia: 3,
+            img: "./cartas/capitao_america.png"
+        },
+        {
+            nome: "deadpool",
+            forca: 1,
+            resistencia: 1,
+            img: "./cartas/deadpool.png"
+        },
+        {
+            nome: "homem_de_ferro",
+            forca: 5,
+            resistencia: 0,
+            img: "./cartas/homem_de_ferro.png"
+        },
+        {
+            nome: "mercurio",
+            forca: 1,
+            resistencia: 2,
+            img: "./cartas/mercurio.png"
+        },
+        {
+            nome: "mulher_invisivel",
+            forca: 2,
+            resistencia: 2,
+            img: "./cartas/mulher_invisivel.png"
+        },
+        {
+            nome: "sr_fantastico",
+            forca: 3,
+            resistencia: 2,
+            img: "./cartas/sr_fantastico.png"
+        },
+        {
+            nome: "thor",
+            forca: 3,
+            resistencia: 4,
+            img: "./cartas/thor.png"
+        },
+        {
+            nome: "venom",
+            forca: 3,
+            resistencia: 1,
+            img: "./cartas/venom.png"
+        },
+        {
+            nome: "viuva_negra",
+            forca: 2,
+            resistencia: 1,
+            img: "./cartas/viuva_negra.png"
+        },
+        {
+            nome: "wolverine",
+            forca: 2,
+            resistencia: 3,
+            img: "./cartas/wolverine.png"
+        },
+    ]
+    let baralho_jogador = []
+    let baralho_adversario = []
+    let baralho_batalha_jogador = []
+    let baralho_batalha_adversario = []
+    let pontos_jogador = 0
+    let pontos_adversario = 0
+
+    window.onload = sortear()
+
+    function sortear() {
+        for (let index = 0; index < 5; index++) {
+            let sorteada = parseInt(Math.random() * 10)
+            let sorteadaAdversario = parseInt(Math.random() * 10)
+
+            if (baralho_jogador.indexOf(cartas[sorteada])>-1) {
+                while (true) {
+                    sorteada = parseInt(Math.random() * 10)
+                    if (baralho_jogador.indexOf(cartas[sorteada])<0) {
+                        baralho_jogador.push(cartas[sorteada])
+                        break
+                    }
+                }
+            } else {
+                baralho_jogador.push(cartas[sorteada])
+            }
+
+            if (baralho_adversario.indexOf(cartas[sorteadaAdversario])>-1) {
+                while (true) {
+                    sorteadaAdversario = parseInt(Math.random() * 10)
+                    if (baralho_adversario.indexOf(cartas[sorteadaAdversario])<0) {
+                        baralho_adversario.push(cartas[sorteadaAdversario])
+                        break
+                    }
+                }
+            } else {
+                baralho_adversario.push(cartas[sorteadaAdversario])
+            }
+        }
+
+        for (let index = 0; index < 5; index++) {
+            const cartaAtualJogador = baralho_jogador[index];
+            const cartaAtualAdversario = baralho_adversario[index];
+            div_baralho_jogador.innerHTML += `<img src="${cartaAtualJogador.img}" alt="" width="100px">`
+            div_baralho_adversario.innerHTML += `<img src="${cartaAtualAdversario.img}" alt="" width="100px">`
+        }
+    }
+
+
+    function simular() {
+        div_baralho_jogador.innerHTML = ``
+        div_baralho_adversario.innerHTML = ``
+        let cartaJogador = parseInt(Math.random() * baralho_jogador.length)
+        let cartaAdversario = parseInt(Math.random() * baralho_adversario.length)
+
+        if (baralho_batalha_adversario.length==5 && baralho_batalha_jogador==5) {
+            alert(`O jogo já acabou!`)
+        } else {
+            if (baralho_batalha_jogador.indexOf(baralho_jogador[cartaJogador])>-1) {
+                while (baralho_batalha_jogador.indexOf(cartaJogador)>-1) {
+                    cartaJogador = parseInt(Math.random() * baralho_jogador.length)
+                }
+                baralho_batalha_jogador.push(baralho_jogador[cartaJogador])
+            } else {
+                baralho_batalha_jogador.push(baralho_jogador[cartaJogador])
+            }
+
+            if (baralho_batalha_adversario.indexOf(baralho_adversario[cartaAdversario])>-1) {
+                while (baralho_batalha_adversario.indexOf(cartaAdversario)>-1) {
+                    cartaAdversario = parseInt(Math.random() * baralho_adversario.length)
+                }
+                baralho_batalha_adversario.push(baralho_adversario[cartaAdversario])
+            } else {
+                baralho_batalha_adversario.push(baralho_adversario[cartaAdversario])
+            }
+
+            for (let index = 0; index < 5; index++) {
+                const cartaAtualJogador = baralho_jogador[index]
+                const cartaAtualAdversario = baralho_adversario[index]
+                if(baralho_batalha_jogador.indexOf(cartaAtualJogador)<0) {
+                    div_baralho_jogador.innerHTML += `<img src="${cartaAtualJogador.img}" alt="" width="100px">`
+                }
+
+                if(baralho_batalha_adversario.indexOf(cartaAtualAdversario)<0) {
+                    div_baralho_adversario.innerHTML += `<img src="${cartaAtualAdversario.img}" alt="" width="100px">`
+                }
+                
+            }
+        }
+    }
+</script>
